@@ -81,6 +81,7 @@ Metadata:
       - MaxCapacity
       - MinCapacity
       - HealthCheckGracePeriod
+      - HealthCheckPath
       - LogsRetentionInDays
     - Label:
         default: 'Permission Parameters'
@@ -326,6 +327,10 @@ Parameters:
     Default: 60
     MinValue: 0
     MaxValue: 1800
+  HealthCheckPath:
+    Description: 'Path of health check'
+    Type: String
+    Default: '/'
   Spot:
     Description: 'Run workload on spot capacity?'
     Type: String
@@ -623,7 +628,7 @@ Resources:
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     Properties:
       HealthCheckIntervalSeconds: 15
-      HealthCheckPath: '/'
+      HealthCheckPath: !Ref HealthCheckPath
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 10
       HealthyThresholdCount: 2

@@ -108,8 +108,14 @@ Parameters:
     Default: 14
     AllowedValues: [1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653]
   GitHubOrganization:
-    Description: 'GitHub organization name.'
+    Description: 'Restrict logins to members of this GitHib organisation.'
     Type: String
+  GitHubUser:
+    Description: |
+      To allow a user to login with their username even if they do not belong to the specified org
+      and team or collaborators, separated by a comma.
+    Type: String
+    Default: ''
   GitHubClientId:
     Description: 'GitHub client id. Register a new application here: https://github.com/organizations/$YOUR_ORGANIZATION/settings/applications'
     Type: String
@@ -716,6 +722,7 @@ Resources:
                   cookie_secret = "${CookieSecret}"
                   provider = "github"
                   github_org = "${GitHubOrganization}"
+                  github_user = "${GitHubUsers}"
                   scope = "user:email" # workaround https://github.com/oauth2-proxy/oauth2-proxy/issues/1669
               - {SkipAuthRegexBlock: !If [HasSkipAuthRegex, !Join ['', ['skip_auth_regex = ["', !Ref SkipAuthRegex, '"]']], '']}
               mode: '000644'
