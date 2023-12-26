@@ -293,6 +293,9 @@ Outputs:
     Value: !Ref Cluster
     Export:
       Name: !Sub '${AWS::StackName}-Cluster'
+  ClusterArn:
+    Description: 'Fargate cluster ARN.'
+    Value: !GetAtt Cluster.Arn
   DNSName:
     Description: 'The DNS name for the ECS cluster load balancer.'
     Value: !GetAtt 'LoadBalancer.DNSName'
